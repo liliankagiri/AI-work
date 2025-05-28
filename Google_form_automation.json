@@ -1,0 +1,116 @@
+{
+  "name": "Google form automation",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtMinute": 5
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2985a77b-142c-40fa-90ae-8c10b60fca90",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json[\"Email Address:\"]}}\n\n",
+        "subject": "Thank you for your submission!",
+        "emailType": "text",
+        "message": "=Hi {{$node[\"Googlesheets\"].json[\"Name\"]}}, thank you for submitting the form. We’ve received your response.\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        340,
+        80
+      ],
+      "id": "b810ba7e-c9b2-4672-a7fe-58461ef5118d",
+      "name": "Gmail",
+      "webhookId": "68720421-a40f-4680-8ff3-8d90aa86a873",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Vbo5Q7G8EfIa7mH9",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1ESXTY1q2TMmdUdW7bCRw1mMp1PPSKH5EULdbUn2_4gs/edit?resourcekey=&gid=1098677687#gid=1098677687",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1098677687,
+          "mode": "list",
+          "cachedResultName": "Form responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ESXTY1q2TMmdUdW7bCRw1mMp1PPSKH5EULdbUn2_4gs/edit#gid=1098677687"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "c01e0963-2e7c-4ac4-9083-06881124769c",
+      "name": "Googlesheets",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jx1RDAbLbeYzKyFY",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Googlesheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Googlesheets": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "223f86ec-cfbc-47d2-b6d4-1023f1aeeee9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6a096167a32f69198f5d234a7df99822dfc7cb587e80f77d61e7e26ae7006c1a"
+  },
+  "id": "6NQ5nsaM0yxp1Wuq",
+  "tags": []
+}
